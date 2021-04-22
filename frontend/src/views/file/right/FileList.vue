@@ -1,0 +1,429 @@
+<template>
+  <div class="file-list-wrapper">
+    <!-- 操作按钮 -->
+    <el-header>
+      <OperationMenu
+        :file-type="fileType"
+        :file-path="filePath"
+        :operation-file="operationFile"
+        :selection-file="selectionFile"
+        :batch-operate.sync="batchOperate"
+        @getSearchFileList="getSearchFileList"
+        @getTableDataByType="getTableDataByType"
+        @setMoveFileDialogData="setMoveFileDialogData"
+        @setShareFileDialogData="setShareFileDialogData"
+      />
+    </el-header>
+    <div class="middle-wrapper">
+      <!-- 面包屑导航栏 -->
+      <BreadCrumb :file-type="fileType" class="breadcrumb"/>
+    </div>
+    <FileTable
+      v-if="fileModel === 0"
+      :file-type="fileType"
+      :file-path="filePath"
+      :file-list="fileList"
+      :loading="loading"
+      @setMoveFileDialogData="setMoveFileDialogData"
+      @setShareFileDialogData="setShareFileDialogData"
+      @setOperationFile="setOperationFile"
+      @setSelectionFile="setSelectionFile"
+      @getTableDataByType="getTableDataByType"
+    />
+    <!-- 移动文件模态框 -->
+    <MoveFileDialog
+      :dialog-data="dialogMoveFile"
+      @setSelectFilePath="setSelectFilePath"
+      @confirmDialog="confirmMoveFile"
+      @setDialogData="setMoveFileDialogData"
+    />
+    <ShareFileDialog
+      :dialog-share-file="dialogShareFile"
+      @setDialogShareFileData="setDialogShareFileData"/>
+  </div>
+</template>
+
+<script>
+  import OperationMenu from './components/OperationMenu'
+  import BreadCrumb from "@/components/BreadCrumb";
+  import FileTable from "@/views/file/right/components/FileTable";
+  import MoveFileDialog from "@/components/MoveFileDialog";
+  import ShareFileDialog from "@/components/ShareFileDialog";
+  import {getFileListByPath, getFileListByType, moveFile, shareFile} from "@/request/file";
+
+  export default {
+    name: 'FileList',
+    components: {
+      OperationMenu, BreadCrumb, FileTable, MoveFileDialog, ShareFileDialog,
+    },
+    data() {
+      return {
+        fileNameSearch: '',
+        loading: true, //  表格数据-loading
+        fileList: [], //  表格数据-文件列表
+        pageData: {
+          currentPage: 1,
+          pageCount: 50,
+          total: 0,
+        },
+        //  移动文件模态框数据
+        dialogMoveFile: {
+          isBatchMove: false,
+          visible: false, //  是否可见
+        },
+        selectFilePath: '', //  移动文件路径
+        operationFile: {}, // 当前操作行
+        selectionFile: [], // 勾选的文件
+        // 分享文件对话框数据
+        dialogShareFile: {
+          visible: false,
+          loading: false,
+          success: false,
+          shareData: {},
+        },
+        //  可以识别的文件类型
+        fileImgTypeList: [
+          'png',
+          'jpg',
+          'jpeg',
+          'docx',
+          'doc',
+          'ppt',
+          'pptx',
+          'xls',
+          'xlsx',
+          'avi',
+          'mp4',
+          'css',
+          'csv',
+          'chm',
+          'rar',
+          'zip',
+          'dmg',
+          'mp3',
+          'open',
+          'pdf',
+          'rtf',
+          'txt',
+          'oa',
+          'js',
+          'html',
+          'img',
+          'sql',
+          'jar',
+          'svg',
+          'gif',
+          'json',
+          'exe',
+        ],
+        //  文件图片Map映射
+        fileImgMap: {
+          dir: require('@/assets/images/file/dir.png'),
+          chm: require('@/assets/images/file/file_chm.png'),
+          css: require('@/assets/images/file/file_css.png'),
+          csv: require('@/assets/images/file/file_csv.png'),
+          png: require('@/assets/images/file/file_pic.png'),
+          jpg: require('@/assets/images/file/file_pic.png'),
+          jpeg: require('@/assets/images/file/file_pic.png'),
+          docx: require('@/assets/images/file/file_word.png'),
+          doc: require('@/assets/images/file/file_word.png'),
+          ppt: require('@/assets/images/file/file_ppt.png'),
+          pptx: require('@/assets/images/file/file_ppt.png'),
+          xls: require('@/assets/images/file/file_excel.png'),
+          xlsx: require('@/assets/images/file/file_excel.png'),
+          mp4: require('@/assets/images/file/file_video.png'),
+          avi: require('@/assets/images/file/file_avi.png'),
+          rar: require('@/assets/images/file/file_rar.png'),
+          zip: require('@/assets/images/file/file_zip.png'),
+          dmg: require('@/assets/images/file/file_dmg.png'),
+          mp3: require('@/assets/images/file/file_music.png'),
+          open: require('@/assets/images/file/file_open.png'),
+          pdf: require('@/assets/images/file/file_pdf.png'),
+          rtf: require('@/assets/images/file/file_rtf.png'),
+          txt: require('@/assets/images/file/file_txt.png'),
+          oa: require('@/assets/images/file/file_oa.png'),
+          unknown: require('@/assets/images/file/file_unknown.png'),
+          js: require('@/assets/images/file/file_js.png'),
+          html: require('@/assets/images/file/file_html.png'),
+          img: require('@/assets/images/file/file_img.png'),
+          sql: require('@/assets/images/file/file_sql.png'),
+          jar: require('@/assets/images/file/file_jar.png'),
+          svg: require('@/assets/images/file/file_svg.png'),
+          gif: require('@/assets/images/file/file_gif.png'),
+          json: require('@/assets/images/file/file_json.png'),
+          exe: require('@/assets/images/file/file_exe.png'),
+        },
+        batchOperate: false, //  批量操作模式
+      }
+    },
+    computed: {
+      // 左侧菜单选中的文件类型
+      fileType() {
+        return this.$route.query.fileType ? Number(this.$route.query.fileType) : 0
+      },
+      // 当前所在路径
+      filePath() {
+        return this.$route.query.filePath ? this.$route.query.filePath : '/'
+      },
+      // 文件查看模式 0列表模式 1网格模式 2 时间线模式
+      fileModel() {
+        return this.$store.getters.fileModel
+      },
+    },
+    watch: {
+      filePath() {
+        // 当左侧菜单选择全部，文件路径发生变化时，再重新获取文件列表
+        if (this.$route.name === 'File' && this.fileType === 0) {
+          this.setPageCount()
+          this.getTableDataByType()
+        }
+      },
+      fileType() {
+        if (this.$route.name === 'File') {
+          this.setPageCount()
+          this.getTableDataByType()
+        }
+      },
+      // 监听文件查看模式
+      fileModel() {
+        this.setPageCount()
+        this.getTableDataByType()
+      },
+      batchOperate(value) {
+        if (!value) {
+          this.selectionFile = []
+        }
+      },
+    },
+    created() {
+      this.setPageCount()
+      this.getTableDataByType()
+    },
+    methods: {
+      /**
+       * 表格数据获取相关事件 | 调整分页大小
+       */
+      setPageCount() {
+        this.pageData.currentPage = 1
+        if (this.fileModel === 0) {
+          this.pageData.pageCount = 50
+        }
+        if (this.fileModel === 1) {
+          this.pageData.pageCount = 100
+        }
+      },
+      /**
+       * 表格数据获取相关事件 | 获取文件列表数据
+       */
+      getTableDataByType() {
+        this.batchOperate = false
+        this.loading = true
+        // 分类型
+        if (Number(this.fileType)) {
+          if (Number(this.fileType) === 6) {
+            //  回收站
+          } else {
+            this.showFileListByType()
+          }
+        } else {
+          // 全部文件
+          this.showFileList()
+        }
+        this.$store.dispatch('showStorage')
+      },
+      /**
+       * 表格数据获取相关事件 | 获取当前路径下的文件列表
+       */
+      showFileList() {
+        const data = {
+          filePath: this.filePath,
+          currentPage: this.pageData.currentPage,
+          pageCount: this.pageData.pageCount,
+          fileType: this.fileType,
+        }
+        getFileListByPath(data).then((res) => {
+          if (res.success) {
+            this.fileList = res.data.files
+            this.pageData.total = res.data.total
+            this.loading = false
+          } else {
+            this.$message.error(res.message)
+          }
+        })
+      },
+      /**
+       * 表格数据获取相关事件 | 分页组件 | 当前页码改变
+       */
+      handleCurrentChange(currentPage) {
+        this.pageData.currentPage = currentPage
+        this.getTableDataByType()
+      },
+      /**
+       * 表格数据获取相关事件 | 分页组件 | 页大小改变时
+       */
+      handleSizeChange(pageCount) {
+        this.pageData.pageCount = pageCount
+        this.getTableDataByType()
+      },
+      /**
+       * 表格数据获取相关事件 | 获取回收站文件列表
+       */
+      showFileRecovery() {
+      },
+      /**
+       * 表格数据获取相关事件 | 根据文件类型展示文件列表
+       */
+      showFileListByType() {
+        const data = {
+          fileType: this.fileType,
+          currentPage: this.pageData.currentPage,
+          pageCount: this.pageData.pageCount,
+        }
+        getFileListByType(data).then((res) => {
+          if (res.success) {
+            this.fileList = res.data.files
+            this.pageData.total = res.data.total
+            this.loading = false
+          } else {
+            this.$message.error(res.message)
+          }
+        })
+      },
+
+      /**
+       * 表格勾选框事件 | 保存被勾选的文件
+       * @param {object[]} selection 被勾选的文件数组
+       */
+      setSelectionFile(selection) {
+        this.selectionFile = selection
+      },
+
+      /**
+       * 移动按钮相关事件 | 当前操作行
+       * @param {object} operationFile
+       */
+      setOperationFile(operationFile) {
+        this.operationFile = operationFile
+      },
+      /**
+       * 移动按钮相关事件 | 设置移动文件模态框相关数据
+       * @param {boolean} isBatchMove 是否批量移动，为 null时是确认移动，值由之前的值而定
+       * @param {boolean} visible 移动文件对话框状态
+       */
+      setMoveFileDialogData(isBatchMove, visible) {
+        this.dialogMoveFile.isBatchMove = isBatchMove || this.dialogMoveFile.isBatchMove
+        this.dialogMoveFile.visible = visible
+      },
+      /**
+       * 移动文件模态框 | 设置移动后的文件路径
+       * @param {string} selectFilePath 目标文件夹路径
+       */
+      setSelectFilePath(selectFilePath) {
+        this.selectFilePath = selectFilePath
+      },
+      /**
+       * 移动文件模态框 | 确定按钮事件
+       */
+      confirmMoveFile() {
+        const data = {
+          oldFilePath: this.operationFile.filePath,
+          filePath: this.selectFilePath,
+          fileName: this.operationFile.fileName,
+          extendName: this.operationFile.extendName,
+        }
+        moveFile(data).then((res) => {
+          if (res.success) {
+            this.$message.success('移动文件成功')
+            this.getTableDataByType()
+            this.dialogMoveFile.visible = false
+          } else {
+            this.$message.error(res.message)
+          }
+        })
+      },
+      /**
+       * 获取搜索文件结果列表
+       * @param {string} fileName 文件名称
+       */
+      getSearchFileList(fileName) {
+      },
+      /**
+       * 设置分享文件对话框状态
+       */
+      setShareFileDialogData() {
+        this.dialogShareFile.visible = true
+      },
+      /**
+       * 分享文件对话框确定|取消按钮点击事件
+       * @param {boolean} status 对话框状态
+       * @param {object} data 分享文件数据
+       */
+      setDialogShareFileData(status, data) {
+        if (status) {
+          this.dialogShareFile.loading = true
+          shareFile({
+            ...data,
+            remarks: '',
+            files: JSON.stringify(
+              this.selectionFile.map((item) => {
+                return {
+                  userFileId: item.userFileId,
+                }
+              })
+            ),
+          }).then(
+            (res) => {
+              this.dialogShareFile.loading = false
+              if (res.success) {
+                this.dialogShareFile.success = true
+                this.dialogShareFile.shareData = res.data.share
+              } else {
+                this.$message.error(res.message)
+              }
+            },
+            (error) => {
+              console.log(error)
+              this.$message.error(error.message)
+              this.dialogShareFile.loading = false
+            }
+          )
+        } else {
+          this.dialogShareFile.visible = false
+          this.dialogShareFile.loading = false
+          this.dialogShareFile.success = false
+        }
+      },
+    },
+  }
+</script>
+
+<style lang="stylus" scoped>
+  @import '~@/assets/styles/varibles.styl';
+
+  .file-list-wrapper {
+    >>> .el-header {
+      padding: 0;
+    }
+
+    .middle-wrapper {
+      margin-bottom: 8px;
+    }
+
+    .pagination-wrapper {
+      position: relative;
+      border-top: 1px solid $BorderBase;
+      height: 44px;
+      line-height: 44px;
+      text-align: center;
+
+      .current-page-count {
+        position: absolute;
+        left: 16px;
+        height: 32px;
+        line-height: 32px;
+        font-size: 13px;
+        color: $RegularText;
+      }
+    }
+  }
+</style>
