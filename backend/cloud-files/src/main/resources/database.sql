@@ -10,7 +10,7 @@ create table file
     timeStampName varchar(500),
     primary key (fileId)
 ) engine=InnoDB;
-create table operationlog
+create table operation_log
 (
     operationLogId bigint not null auto_increment,
     detail         varchar(255),
@@ -35,14 +35,6 @@ create table permission
     resourceType varchar(255),
     url          varchar(255),
     primary key (permissionId)
-) engine=InnoDB;
-create table recoveryfile
-(
-    recoveryFileId bigint(20) not null auto_increment,
-    deleteBatchNum varchar(50),
-    deleteTime     varchar(25),
-    userFileId     bigint(20),
-    primary key (recoveryFileId)
 ) engine=InnoDB;
 create table role
 (
@@ -69,7 +61,7 @@ create table share
     userId         bigint,
     primary key (shareId)
 ) engine=InnoDB;
-create table sharefile
+create table share_file
 (
     shareFileId   bigint not null auto_increment,
     shareBatchNum varchar(255),
@@ -101,7 +93,7 @@ create table user
 create table user_role
 (
     userId bigint(20) not null,
-    roleid bigint     not null
+    roleId bigint     not null
 ) engine=InnoDB;
 create table user_file
 (
