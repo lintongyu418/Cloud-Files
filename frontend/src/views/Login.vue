@@ -13,10 +13,10 @@
         hide-required-asterisk
       >
         <el-form-item prop="username">
-          <el-input v-model="loginForm.username" prefix-icon="el-icon-mobile-phone" placeholder="手机号"/>
+          <el-input v-model="loginForm.username" prefix-icon="el-icon-mobile-phone" placeholder="phone number"/>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="loginForm.password" prefix-icon="el-icon-lock" placeholder="密码" show-password/>
+          <el-input v-model="loginForm.password" prefix-icon="el-icon-lock" placeholder="password" show-password/>
         </el-form-item>
         <el-form-item class="login-btn-form-item">
           <el-button
@@ -48,13 +48,13 @@
         },
         // 登录表单验证规则
         loginFormRules: {
-          username: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
+          username: [{ required: true, message: 'please enter your phone number', trigger: 'blur' }],
           password: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
+            { required: true, message: 'please enter password', trigger: 'blur' },
             {
               min: 4,
               max: 20,
-              message: '长度在 5 到 20 个字符',
+              message: '5 - 20 characters',
               trigger: 'blur',
             },
           ],
@@ -121,7 +121,7 @@
                 this.$refs[formName].resetFields() //  清空表单
                 this.$router.replace(this.url)  //  跳转到前一个页面或者网盘主页
               } else {
-                this.$message.error('手机号或密码错误！')
+                this.$message.error('phone number or password is error！')
                 this.isPassing = false
               }
             })
