@@ -10,10 +10,11 @@ import uploader from 'vue-simple-uploader'
 import globalFunction from '@/globalFunctions.js'
 import * as filters from '@/globalFilters.js'
 import "@/router/before"
+import locale from "element-ui/lib/locale/lang/en";
 
 Vue.config.productionTip = false
 
-Vue.use(ElementUI);
+Vue.use(ElementUI, {locale});
 Vue.use(uploader);
 Vue.prototype.$EventBus = new Vue()
 

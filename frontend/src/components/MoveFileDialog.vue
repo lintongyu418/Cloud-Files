@@ -1,11 +1,11 @@
 <template>
   <div class="move-dialog-wrapper">
     <!-- 移动文件-选择目标路径 -->
-    <el-dialog :visible.sync="dialogData.visible" title="选择目标路径" @open="handleDialogOpen">
+    <el-dialog :visible.sync="dialogData.visible" title="Please select target path" @open="handleDialogOpen">
       <div class="el-dialog-div">
         <!-- 选择的目标路径 -->
         <div class="target-path">
-          <span class="label">目标路径：</span>
+          <span class="label">Target Path：</span>
           <el-input v-model="targetPath" class="content" readonly size="small"/>
         </div>
         <!-- 文件目录树 -->
@@ -21,7 +21,7 @@
           <span slot-scope="{ node, data }" class="custom-tree-node">
             <span class="label">{{ node.label }}</span>
             <el-button class="add-folder-btn" type="text" size="mini" @click.stop="handleAddFolderBtnClick(data)">
-              新建文件夹
+              New Folder
             </el-button>
           </span>
         </el-tree>

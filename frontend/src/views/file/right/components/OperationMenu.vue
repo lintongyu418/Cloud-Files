@@ -55,14 +55,14 @@
       v-model="searchFile.fileName"
       :clearable="true"
       class="select-file-input"
-      placeholder="搜索您的文件"
+      placeholder="Search File"
       size="mini"
       maxlength="255"
       @change="handleSearchInputChange"
       @clear="$emit('getTableDataByType')"
       @keyup.enter.native="handleSearchInputChange(searchFile.fileName)"
     >
-      <i slot="prefix" class="el-input__icon el-icon-search" title="点击搜索" @click="handleSearchClick"/>
+      <i slot="prefix" class="el-input__icon el-icon-search" title="Search" @click="handleSearchClick"/>
     </el-input>
 
     <!-- 批量操作 -->
@@ -80,17 +80,11 @@
       <i slot="reference" class="setting-icon el-icon-setting"/>
       <!-- 文件展示模式 -->
       <div class="change-file-model">
-        <div class="title">查看模式</div>
+        <div class="title">View Mode</div>
         <el-radio-group v-model="fileGroupLabel" size="mini" @change="handleFileDisplayModelChange">
-          <el-radio-button :label="0"> <i class="el-icon-tickets"/> 列表 </el-radio-button>
-          <el-radio-button :label="1"> <i class="el-icon-s-grid"/> 网格 </el-radio-button>
-          <el-radio-button v-if="fileType === 1" :label="2"> <i class="el-icon-date"/> 时间线 </el-radio-button>
+          <el-radio-button :label="0"> <i class="el-icon-tickets"/> Table </el-radio-button>
+          <el-radio-button :label="1"> <i class="el-icon-s-grid"/> Grid </el-radio-button>
         </el-radio-group>
-      </div>
-      <!-- 图标大小调整 -->
-      <div v-if="fileGroupLabel === 1 || fileGroupLabel === 2" class="change-grid-size">
-        <div class="title">调整图标大小</div>
-        <el-slider v-model="gridSize" :min="40" :max="150" :step="10" :format-tooltip="formatTooltip"/>
       </div>
     </el-popover>
     <AddFolderDialog

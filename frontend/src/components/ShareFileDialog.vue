@@ -4,7 +4,7 @@
     <el-dialog
       :visible.sync="dialogShareFile.visible"
       :close-on-click-modal="false"
-      title="分享文件"
+      title="Share File"
       width="550px"
       @close="handleShareFileDialogCancel('shareFileForm')"
     >
@@ -17,22 +17,22 @@
         label-suffix="："
         label-width="130px"
       >
-        <el-form-item label="链接有效期至" prop="endTime">
+        <el-form-item label="Valid until" prop="endTime">
           <el-date-picker
             v-model="form.endTime"
             :editable="false"
             :clearable="false"
             :picker-options="pickerOptions"
             type="datetime"
-            placeholder="选择日期时间"
+            placeholder="Choose date"
             align="right"
             value-format="yyyy-MM-dd HH:mm:ss"
           />
         </el-form-item>
-        <el-form-item label="是否需要提取码" prop="shareType">
+        <el-form-item label="Verification code?" prop="shareType">
           <el-radio-group v-model="form.shareType">
-            <el-radio :label="1">是</el-radio>
-            <el-radio :label="0">否</el-radio>
+            <el-radio :label="1">Yes</el-radio>
+            <el-radio :label="0">No</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -46,9 +46,9 @@
       >
         <div class="success-tip">
           <i class="el-icon-success"/>
-          <span class="text">成功创建分享链接</span>
+          <span class="text">Successfully created a share link!</span>
         </div>
-        <el-form-item label="分享链接" prop="shareBatchNum">
+        <el-form-item label="share link" prop="shareBatchNum">
           <el-input
             :value="getShareLink(dialogShareFile.shareData.shareBatchNum)"
             :readonly="true"
@@ -65,15 +65,15 @@
           v-if="dialogShareFile.success"
           type="primary"
           @click="copyShareLink(dialogShareFile.shareData.shareBatchNum, dialogShareFile.shareData.extractionCode)"
-        >复制链接及提取码</el-button
+        >Copy share link</el-button
         >
         <template v-else>
-          <el-button @click="handleShareFileDialogCancel('shareFileForm')">取 消</el-button>
+          <el-button @click="handleShareFileDialogCancel('shareFileForm')">Cancel</el-button>
           <el-button
             :loading="dialogShareFile.loading"
             type="primary"
             @click="handleShareFileDialogOk('shareFileForm')"
-          >确 定</el-button
+          >Confirm</el-button
           >
         </template>
       </div>
@@ -99,19 +99,19 @@ export default {
         shareType: 0,
       },
       rules: {
-        endTime: [{ required: true, message: '请选择链接有效期', trigger: 'blur' }],
+        endTime: [{ required: true, message: 'Please choose the end date', trigger: 'blur' }],
       },
       loading: false,
       pickerOptions: {
         shortcuts: [
           {
-            text: '今天',
+            text: 'Today',
             onClick(picker) {
               picker.$emit('pick', new Date())
             },
           },
           {
-            text: '1天',
+            text: 'One day',
             onClick(picker) {
               const date = new Date()
               date.setTime(date.getTime() + 3600 * 1000 * 24)
@@ -119,7 +119,7 @@ export default {
             },
           },
           {
-            text: '7天',
+            text: 'One Week',
             onClick(picker) {
               const date = new Date()
               date.setTime(date.getTime() + 3600 * 1000 * 24 * 7)
@@ -127,7 +127,7 @@ export default {
             },
           },
           {
-            text: '30天',
+            text: 'A month',
             onClick(picker) {
               const date = new Date()
               date.setTime(date.getTime() + 3600 * 1000 * 24 * 30)

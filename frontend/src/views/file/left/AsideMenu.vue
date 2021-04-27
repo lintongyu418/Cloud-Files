@@ -58,8 +58,8 @@
     <el-tooltip :content="isCollapse ? 'expand' : 'chose'" effect="dark" placement="right">
       <div class="aside-title" @click="isCollapse ? (isCollapse = false) : (isCollapse = true)">
         <div class="top"/>
-        <i v-if="isCollapse" class="icon el-icon-d-arrow-right" title="展开"/>
-        <i v-else class="icon el-icon-d-arrow-left" title="收起"/>
+        <i v-if="isCollapse" class="icon el-icon-d-arrow-right" title="Expand"/>
+        <i v-else class="icon el-icon-d-arrow-left" title="Fold"/>
         <div class="bottom"/>
       </div>
     </el-tooltip>

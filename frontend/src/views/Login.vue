@@ -1,8 +1,8 @@
 <template>
   <div id="loginBackground" class="login-wrapper">
     <div class="form-wrapper">
-      <h1 class="login-title">登录</h1>
-      <p class="login-system">奇文网盘</p>
+      <h1 class="login-title">Login</h1>
+      <p class="login-system">Cloud Disk</p>
       <!-- 登录表单 -->
       <el-form
         ref="loginForm"
@@ -24,7 +24,7 @@
             class="login-btn"
             type="primary"
             @click="submitForm('loginForm')">
-            登录
+            Login
           </el-button>
         </el-form-item>
       </el-form>

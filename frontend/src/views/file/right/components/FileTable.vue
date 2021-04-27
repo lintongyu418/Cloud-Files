@@ -8,7 +8,7 @@
       :data="fileList"
       class="file-table"
       fit
-      element-loading-text="文件加载中……"
+      element-loading-text="Loading……"
       tooltip-effect="dark"
       @selection-change="handleSelectRow"
       @sort-change="handleSortChange"
@@ -25,7 +25,7 @@
       </el-table-column>
       <el-table-column key="fileName" :sort-by="['isDir', 'fileName']" prop="fileName" sortable show-overflow-tooltip>
         <template slot="header">
-          <span>文件名</span>
+          <span>Names</span>
         </template>
         <template slot-scope="scope">
           <div style="cursor: pointer" @click="handleFileNameClick(scope.row, scope.$index, fileList)">
@@ -36,7 +36,7 @@
       <el-table-column
         v-if="Number($route.query.fileType)"
         key="filePath"
-        :label="fileType === 6 ? '原路径' : '路径'"
+        :label="fileType === 6 ? 'Original Path' : 'Path'"
         prop="filePath"
         show-overflow-tooltip
       >
@@ -57,7 +57,7 @@
         v-if="selectedColumnList.includes('extendName')"
         key="extendName"
         :sort-by="['isDir', 'extendName']"
-        label="类型"
+        label="Type"
         width="80"
         prop="extendName"
         sortable
@@ -65,14 +65,14 @@
       >
         <template slot-scope="scope">
           <span v-if="scope.row.extendName">{{ scope.row.extendName }}</span>
-          <span v-else>文件夹</span>
+          <span v-else>Folder</span>
         </template>
       </el-table-column>
       <el-table-column
         v-if="selectedColumnList.includes('fileSize')"
         key="fileSize"
         :sort-by="['isDir', 'fileSize']"
-        label="大小"
+        label="Size"
         width="80"
         prop="fileSize"
         sortable
@@ -89,7 +89,7 @@
         v-if="selectedColumnList.includes('uploadTime') && ![7, 8].includes(fileType)"
         key="uploadTime"
         :sort-by="['isDir', 'uploadTime']"
-        label="修改日期"
+        label="Modified Date"
         prop="uploadTime"
         width="180"
         sortable
@@ -99,7 +99,7 @@
         v-if="fileType === 6 && selectedColumnList.includes('deleteTime')"
         key="deleteTime"
         :sort-by="['isDir', 'deleteTime']"
-        label="删除日期"
+        label="Deleted Date"
         prop="deleteTime"
         width="180"
         sortable
@@ -108,20 +108,20 @@
       <el-table-column
         v-if="routeName === 'myShare'"
         key="shareType"
-        label="分享类型"
+        label="Shared Type"
         prop="shareType"
         width="100"
         align="center"
       >
         <template slot-scope="scope">
-          {{ scope.row.shareType === 1 ? '公共' : '私密' }}
+          {{ scope.row.shareType === 1 ? 'Public' : 'Private' }}
         </template>
       </el-table-column>
       <el-table-column
         v-if="routeName === 'myShare'"
         key="shareTime"
         :sort-by="['isDir', 'shareTime']"
-        label="分享时间"
+        label="Share Time"
         prop="shareTime"
         width="180"
         show-overflow-tooltip
@@ -150,8 +150,8 @@
       <el-table-column key="action" :width="operaColumnWidth">
         <template slot="header">
           <span>操作</span>
-          <i class="el-icon-circle-plus" title="展开" @click="operaColumnExpand = true"/>
-          <i class="el-icon-remove" title="折叠" @click="operaColumnExpand = false"/>
+          <i class="el-icon-circle-plus" title="Expand" @click="operaColumnExpand = true"/>
+          <i class="el-icon-remove" title="Fold" @click="operaColumnExpand = false"/>
         </template>
         <template slot-scope="scope">
           <div v-if="operaColumnExpand">
@@ -160,102 +160,83 @@
               type="text"
               size="mini"
               @click.native="handleDeleteFileBtnClick(scope.row)"
-            >删除</el-button
-            >
-            <el-button
-              v-if="restoreBtnShow"
-              type="text"
-              size="mini"
-              @click.native="handleRestoreFileBtnClick(scope.row)"
-            >还原</el-button
+            >Delete</el-button
             >
             <el-button
               v-if="moveBtnShow"
               type="text"
               size="mini"
               @click.native="handleMoveFileBtnClick(scope.row)"
-            >移动</el-button
+            >Move</el-button
             >
             <el-button
               v-if="renameBtnShow"
               type="text"
               size="mini"
               @click.native="handleRenameFileBtnClick(scope.row)"
-            >重命名</el-button
+            >Rename</el-button
             >
             <el-button
               v-if="shareBtnShow"
               type="text"
               size="mini"
               @click.native="handleShareFileBtnClick(scope.row)"
-            >分享</el-button
+            >Share</el-button
             >
             <el-button v-if="downloadBtnShow" type="text" size="mini">
-              <a :href="getDownloadFilePath(scope.row)" target="_blank" style="display: block; color: inherit">下载</a>
+              <a
+                :href="getDownloadFilePath(scope.row)"
+                target="_blank"
+                style="display: block; color: inherit">
+                Download
+              </a>
             </el-button>
-            <el-button
-              v-if="unzipBtnShow && ['zip', 'rar'].includes(scope.row.extendName)"
-              type="text"
-              size="mini"
-              @click.native="handleUnzipFileBtnClick(scope.row)"
-            >解压缩</el-button
-            >
             <el-button
               v-if="copyLinkBtnShow"
               type="text"
               size="mini"
               @click="copyShareLink(scope.row.shareBatchNum, scope.row.extractionCode)"
-            >复制链接</el-button
+            >Copy Link</el-button
             >
           </div>
           <el-dropdown v-else trigger="click">
             <el-button size="mini">
-              操作
+              Ops
               <i class="el-icon-arrow-down el-icon--right"/>
             </el-button>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item
                 v-if="deleteBtnShow"
                 @click.native="handleDeleteFileBtnClick(scope.row)"
-              >删除</el-dropdown-item
-              >
-              <el-dropdown-item
-                v-if="restoreBtnShow"
-                @click.native="handleRestoreFileBtnClick(scope.row)"
-              >还原</el-dropdown-item
+              >Delete</el-dropdown-item
               >
               <el-dropdown-item
                 v-if="moveBtnShow"
                 @click.native="handleMoveFileBtnClick(scope.row)"
-              >移动</el-dropdown-item
+              >Move</el-dropdown-item
               >
               <el-dropdown-item
                 v-if="renameBtnShow"
                 @click.native="handleRenameFileBtnClick(scope.row)"
-              >重命名</el-dropdown-item
+              >Rename</el-dropdown-item
               >
               <el-dropdown-item
                 v-if="shareBtnShow"
                 @click.native="handleShareFileBtnClick(scope.row)"
-              >分享</el-dropdown-item
+              >Share</el-dropdown-item
               >
               <el-dropdown-item v-if="downloadBtnShow">
                 <a
                   :href="getDownloadFilePath(scope.row)"
                   target="_blank"
                   style="display: block; color: inherit"
-                >下载</a
+                >Download</a
                 >
               </el-dropdown-item>
               <el-dropdown-item
-                v-if="unzipBtnShow && ['zip', 'rar'].includes(scope.row.extendName)"
-                @click.native="handleUnzipFileBtnClick(scope.row)"
-              >解压缩</el-dropdown-item
-              >
-              <el-dropdown-item
                 v-if="copyLinkBtnShow"
                 @click.native="copyShareLink(scope.row.shareBatchNum, scope.row.extractionCode)"
-              >复制链接</el-dropdown-item
+              >Copy Link</el-dropdown-item
               >
             </el-dropdown-menu>
           </el-dropdown>
@@ -693,9 +674,9 @@ export default {
     handleDeleteFileBtnClick(fileInfo) {
       if (this.fileType === 6) {
         //  回收站里 - 彻底删除
-        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Delete it permanently?', 'Hint', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning',
         })
           .then(() => {
@@ -704,14 +685,14 @@ export default {
           .catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消删除',
+              message: 'cancel deleting',
             })
           })
       } else {
         //  非回收站
-        this.$confirm('删除后可在回收站查看, 是否继续删除?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Deleting file, continue?', 'Hint', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning',
         })
           .then(() => {
@@ -720,7 +701,7 @@ export default {
           .catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消删除',
+              message: 'Cancel delete',
             })
           })
       }
@@ -756,12 +737,12 @@ export default {
      */
     handleRenameFileBtnClick(fileInfo) {
       var fileName = fileInfo.fileName
-      this.$prompt('请输入文件名', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt('Please enter a new name', 'Hint', {
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'cancel',
         inputValue: fileName,
         inputPattern: /\S/, //  文件名不能为空
-        inputErrorMessage: '请输入文件名',
+        inputErrorMessage: 'please enter a new name',
         closeOnClickModal: false,
       })
         .then(({ value }) => {
@@ -772,7 +753,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '取消输入',
+            message: 'cancel input',
           })
         })
     },
@@ -786,7 +767,7 @@ export default {
         if (res.success) {
           this.$emit('getTableDataByType')
           this.$store.dispatch('showStorage')
-          this.$message.success('重命名成功')
+          this.$message.success('Successfully renamed a file')
         } else {
           fileInfo.fileName = fileInfo.oldFileName
           this.$message.error(res.message)

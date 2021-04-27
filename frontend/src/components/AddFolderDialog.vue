@@ -3,7 +3,7 @@
   <el-dialog
     :visible.sync="dialogStatus"
     :close-on-click-modal="false"
-    title="新建文件夹"
+    title="New Folder"
     width="550px"
   >
     <el-form
@@ -14,10 +14,10 @@
       label-width="100px"
       label-position="top"
     >
-      <el-form-item label="文件夹名称" prop="fileName">
+      <el-form-item label="Folder Name" prop="fileName">
         <el-input
           v-model="form.fileName"
-          placeholder="请输入文件夹名称"
+          placeholder="Please enter name"
           type="textarea"
           autosize
           maxlength="255"
@@ -26,8 +26,8 @@
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="handleAddFolderDialogCancel('addFolderForm')">取 消</el-button>
-      <el-button :loading="loading" type="primary" @click="handleAddFolderDialogOk('addFolderForm')">确 定</el-button>
+      <el-button @click="handleAddFolderDialogCancel('addFolderForm')">Cancel</el-button>
+      <el-button :loading="loading" type="primary" @click="handleAddFolderDialogOk('addFolderForm')">Confirm</el-button>
     </div>
   </el-dialog>
 </template>

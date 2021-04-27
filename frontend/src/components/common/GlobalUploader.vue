@@ -12,7 +12,7 @@
       @file-error="handleFileError"
     >
       <uploader-unsupport/><!-- 选择按钮 在这里隐藏 -->
-      <uploader-btn ref="uploadBtn" :attrs="attrs" class="select-file-btn">选择文件</uploader-btn>
+      <uploader-btn ref="uploadBtn" :attrs="attrs" class="select-file-btn">Choose File</uploader-btn>
       <!-- 拖拽上传 区域 -->
       <uploader-drop
         v-show="dropBoxShow"
@@ -25,9 +25,9 @@
           <img v-if="pasteImg.src" :src="pasteImg.src" :alt="pasteImg.name" class="paste-img">
         </div>
         <span v-show="!pasteImg.src" class="text"> 截图粘贴或将文件拖拽至此区域上传 </span>
-        <i v-show="pasteImg.src" class="upload-icon el-icon-upload" @click="handleUploadPasteImg">上传图片</i>
-        <i v-show="pasteImg.src" class="delete-icon el-icon-delete" @click="handleDeletePasteImg">删除图片</i>
-        <i class="close-icon el-icon-circle-close" @click="dropBoxShow = false">关闭</i>
+        <i v-show="pasteImg.src" class="upload-icon el-icon-upload" @click="handleUploadPasteImg">Upload</i>
+        <i v-show="pasteImg.src" class="delete-icon el-icon-delete" @click="handleDeletePasteImg">Delete</i>
+        <i class="close-icon el-icon-circle-close" @click="dropBoxShow = false">Chose</i>
       </uploader-drop>
       <!-- 上传列表 -->
       <uploader-list v-show="panelShow">
@@ -35,11 +35,11 @@
           <div class="file-panel">
             <div class="file-title">
               <span class="title-span">
-                上传列表<span class="count">（{{ props.fileList.length }}）</span>
+                Uploading List<span class="count">（{{ props.fileList.length }}）</span>
               </span>
               <div class="operate">
                 <el-button
-                  :title="collapse ? '展开' : '折叠'"
+                  :title="collapse ? 'Expand' : 'Collapse'"
                   :icon="collapse ? 'el-icon-full-screen' : 'el-icon-minus'"
                   type="text"
                   @click="collapse ? (collapse = false) : (collapse = true)"
@@ -60,7 +60,7 @@
                   <!-- 自定义状态 -->
                   <span class="custom-status">{{ file.statusStr }}</span>
                 </li>
-                <div v-if="!props.fileList.length" class="no-file"><i class="icon-empty-file"/> 暂无待上传文件</div>
+                <div v-if="!props.fileList.length" class="no-file"><i class="icon-empty-file"/> NO file to upload</div>
               </ul>
             </el-collapse-transition>
           </div>
@@ -103,11 +103,11 @@
         },
         // 文件状态文案映射
         fileStatusText: {
-          success: '上传成功',
+          success: 'Successful',
           error: 'error',
-          uploading: '上传中',
-          paused: '暂停中',
-          waiting: '等待中',
+          uploading: 'Uploading',
+          paused: 'Paused',
+          waiting: 'Waiting',
         },
         attrs: {
           accept: '*',
@@ -205,13 +205,13 @@
        */
       handleFileSuccess(rootFile, file, response) {
         if (response === '') {
-          file.statusStr = '上传失败'
+          file.statusStr = 'Failed to upload'
           return
         }
 
         const result = JSON.parse(response)
         if (result.success) {
-          this.$message.success(`${file.name} - 上传完毕`)
+          this.$message.success(`${file.name} - Done uploading`)
           file.statusStr = ''
           setTimeout(() => {
             this.collapse = true //  折叠上传列表
@@ -220,7 +220,7 @@
           this.$EventBus.$emit('refreshStorage', '')
         } else {
           this.$message.error(result.message)
-          file.statusStr = '上传失败'
+          file.statusStr = 'Failed to upload'
         }
       },
       /**
@@ -247,7 +247,7 @@
         const chunks = Math.ceil(file.size / chunkSize)
         const spark = new SparkMD5.ArrayBuffer()
         // 文件状态设为"计算MD5"
-        file.statusStr = '计算MD5'
+        file.statusStr = 'calculating MD5'
         file.pause()
         loadNext()
         fileReader.onload = (e) => {
@@ -256,7 +256,7 @@
             currentChunk++
             loadNext()
             // 实时展示MD5的计算进度
-            file.statusStr = `校验MD5 ${((currentChunk / chunks) * 100).toFixed(0)}%`
+            file.statusStr = `verifying MD5 ${((currentChunk / chunks) * 100).toFixed(0)}%`
           } else {
             const md5 = spark.end()
             this.calculateFileMD5End(md5, file)
@@ -264,8 +264,8 @@
         }
         fileReader.onerror = function () {
           this.$notify({
-            title: '错误',
-            message: `文件${file.name}读取出错，请检查该文件`,
+            title: 'error',
+            message: `file ${file.name}, failed to read!`,
             type: 'error',
             duration: 2000,
           })

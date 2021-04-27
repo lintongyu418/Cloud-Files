@@ -25,11 +25,11 @@ export default {
   data() {
     return {
       fileTypeMap: {
-        1: '全部图片',
-        2: '全部文档',
-        3: '全部视频',
-        4: '全部音乐',
-        5: '其他',
+        1: 'All Pictures',
+        2: 'All Documents',
+        3: 'All Videos',
+        4: 'All Musics',
+        5: 'All Others',
         6: '回收站',
       },
     }

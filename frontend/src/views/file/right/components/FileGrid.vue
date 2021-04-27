@@ -40,7 +40,7 @@
           size="small"
           plain
           @click.native="handleDeleteFileBtnClick(selectedFile)"
-        >删除</el-button
+        >Delete</el-button
         >
         <el-button
           v-if="fileType !== 6"
@@ -48,7 +48,7 @@
           size="small"
           plain
           @click.native="handleMoveFileBtnClick(selectedFile)"
-        >移动</el-button
+        >Move</el-button
         >
         <el-button
           v-if="fileType !== 6"
@@ -56,7 +56,7 @@
           size="small"
           plain
           @click.native="handleRenameFileBtnClick(selectedFile)"
-        >重命名</el-button
+        >Rename</el-button
         >
         <el-button
           v-if="fileType !== 6"
@@ -70,7 +70,7 @@
             :download="selectedFile.fileName + '.' + selectedFile.extendName"
             target="_blank"
             style="display: block; color: inherit"
-          >下载</a
+          >Download</a
           >
         </el-button>
         <el-button
@@ -79,7 +79,7 @@
           size="small"
           plain
           @click.native="handleUnzipFileBtnClick(selectedFile)"
-        >解压缩</el-button
+        >UnZip</el-button
         >
       </div>
     </transition>
@@ -488,12 +488,12 @@ export default {
     handleRenameFileBtnClick(fileInfo) {
       this.rightMenu.isShow = false
       var fileName = fileInfo.fileName
-      this.$prompt('请输入文件名', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt('Please enter a new name', 'Hint', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
         inputValue: fileName,
         inputPattern: /\S/, //  文件名不能为空
-        inputErrorMessage: '请输入文件名',
+        inputErrorMessage: 'new name',
         closeOnClickModal: false,
       })
         .then(({ value }) => {
@@ -504,7 +504,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '取消输入',
+            message: 'Cancel',
           })
         })
     },
