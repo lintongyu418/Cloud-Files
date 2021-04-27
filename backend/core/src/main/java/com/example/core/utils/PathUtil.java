@@ -50,11 +50,11 @@ public class PathUtil {
         return path.substring(0, path.lastIndexOf(Constant.FILE_SEPARATOR));
     }
 
-    public static void main(String[] args) {
-        String path = "aaa/bbb/ccc/";
-        System.out.println(getParentPath(path));
-        String fileName = path.substring(path.lastIndexOf("/"));
-        System.out.println(fileName);
-    }
+//    public static void main(String[] args) {
+//        String path = "aaa/bbb/ccc/";
+//        System.out.println(getParentPath(path));
+//        String fileName = path.substring(path.lastIndexOf("/"));
+//        System.out.println(fileName);
+//    }
 
 }
