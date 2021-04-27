@@ -96,8 +96,8 @@ export function post(url, data = {}, info) {
 
 // 登录提醒
 const loginTip = function() {
-  MessageBox.alert('您尚未登录，请先登录', '操作提示', {
-    confirmButtonText: '确定',
+  MessageBox.alert('Please login', 'Hint', {
+    confirmButtonText: 'confirm',
     callback: () => {
       router.push({
         path: '/login',

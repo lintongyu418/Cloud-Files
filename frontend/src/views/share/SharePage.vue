@@ -9,7 +9,7 @@
           size="mini"
           icon="el-icon-takeaway-box"
           @click="handleSaveBtnClick"
-        >保存到网盘
+        >Save
         </el-button
         >
       </div>
@@ -29,10 +29,10 @@
       :show-close="false"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
-      title="文件分享"
+      title="Share File"
       width="500px"
     >
-      <div v-if="shareStep === 1" class="end-time">此分享链接已过期</div>
+      <div v-if="shareStep === 1" class="end-time">Share Expired</div>
       <el-form
         v-if="shareStep === 2"
         ref="codeForm"
@@ -41,7 +41,7 @@
         class="extraction-code-form"
         label-width="80px"
       >
-        <el-form-item label="提取码" prop="extractionCode">
+        <el-form-item label="Code" prop="extractionCode">
           <el-input v-model="dialogShareFile.codeForm.extractionCode"/>
         </el-form-item>
       </el-form>
@@ -250,7 +250,7 @@
         if (this.selectionFile.length) {
           this.dialogSelectPath.visible = true
         } else {
-          this.$message.warning('请先勾选要保存的文件')
+          this.$message.warning('Please select files to save')
         }
       },
       /**
@@ -275,7 +275,7 @@
           ),
         }).then((res) => {
           if (res.success) {
-            this.$message.success('保存成功')
+            this.$message.success('save successfully')
             this.dialogSelectPath.visible = false
             this.$refs.fileTableInstance.clearSelectedTable() //  清空表格已选项
           } else {

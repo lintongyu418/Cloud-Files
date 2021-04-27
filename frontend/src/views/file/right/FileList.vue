@@ -333,7 +333,7 @@
         }
         moveFile(data).then((res) => {
           if (res.success) {
-            this.$message.success('移动文件成功')
+            this.$message.success('Move successfully')
             this.getTableDataByType()
             this.dialogMoveFile.visible = false
           } else {

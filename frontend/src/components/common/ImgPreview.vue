@@ -21,7 +21,7 @@
             class="item download-link"
             target="_blank"
           >
-            <i class="el-icon-download" title="保存到本地"/>
+            <i class="el-icon-download" title="Save Locally"/>
           </a>
           <el-tooltip effect="dark" placement="bottom">
             <div slot="content">

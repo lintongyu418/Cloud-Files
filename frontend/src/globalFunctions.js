@@ -123,13 +123,13 @@ const globalFunction = {
         ? `${this.getShareLink(
           shareBatchNum
         )}`
-        : `分享链接：${this.getShareLink(shareBatchNum)}\n提取码：${extractionCode
-        }\n复制链接到浏览器中并输入提取码即可查看文件` // 设置内容
+        : `Share Link：${this.getShareLink(shareBatchNum)}\nCode：${extractionCode
+        }\nCopy into Chrome to get shared files` // 设置内容
     document.body.appendChild(input) // 添加临时实例
     input.select() // 选择实例内容
     document.execCommand('Copy') // 执行复制
     document.body.removeChild(input) // 删除临时实例
-    Message.success('复制成功')
+    Message.success('Successful')
   },
 }
 

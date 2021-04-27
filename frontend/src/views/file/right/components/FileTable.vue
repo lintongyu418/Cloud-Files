@@ -43,7 +43,7 @@
         <template slot-scope="scope">
           <span
             style="cursor: pointer"
-            title="点击跳转"
+            title="go to"
             @click="
               $router.push({
                 query: { filePath: scope.row.filePath, fileType: 0 }
@@ -132,7 +132,7 @@
         v-if="routeName === 'myShare'"
         key="endTime"
         :sort-by="['isDir', 'endTime']"
-        label="过期时间"
+        label="expiation"
         prop="endTime"
         width="190"
         show-overflow-tooltip
@@ -149,7 +149,7 @@
       </el-table-column>
       <el-table-column key="action" :width="operaColumnWidth">
         <template slot="header">
-          <span>操作</span>
+          <span>Ops</span>
           <i class="el-icon-circle-plus" title="Expand" @click="operaColumnExpand = true"/>
           <i class="el-icon-remove" title="Fold" @click="operaColumnExpand = false"/>
         </template>

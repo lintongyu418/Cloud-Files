@@ -1,8 +1,8 @@
 <template>
   <div id="registerBackground" class="register-wrapper">
     <div class="form-wrapper">
-      <h1 class="register-title">注册</h1>
-      <p class="register-system">奇文网盘</p>
+      <h1 class="register-title">Register</h1>
+      <p class="register-system">Could Files</p>
       <!-- 注册表单 -->
       <el-form
         ref="registerForm"
@@ -13,13 +13,13 @@
         hide-required-asterisk
       >
         <el-form-item prop="username">
-          <el-input v-model="registerForm.username" prefix-icon="el-icon-user" placeholder="用户名"/>
+          <el-input v-model="registerForm.username" prefix-icon="el-icon-user" placeholder="username"/>
         </el-form-item>
         <el-form-item prop="telephone">
-          <el-input v-model="registerForm.telephone" prefix-icon="el-icon-mobile-phone" placeholder="手机号"/>
+          <el-input v-model="registerForm.telephone" prefix-icon="el-icon-mobile-phone" placeholder="phone number"/>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="registerForm.password" prefix-icon="el-icon-lock" placeholder="密码" show-password/>
+          <el-input v-model="registerForm.password" prefix-icon="el-icon-lock" placeholder="password" show-password/>
         </el-form-item>
         <el-form-item style="user-select: none"/>
         <el-form-item class="registerButtonWrapper">
@@ -27,7 +27,7 @@
             class="registerButton"
             type="primary"
             @click="submitForm('registerForm')"
-          >注册</el-button
+          >Register</el-button
           >
         </el-form-item>
       </el-form>
@@ -60,19 +60,19 @@ export default {
       },
       // 注册表单校验规则
       registerFormRules: {
-        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+        username: [{ required: true, message: 'Please enter username', trigger: 'blur' }],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
+          { required: true, message: 'Please enter password', trigger: 'blur' },
           {
             min: 5,
             max: 20,
-            message: '长度在 5 到 20 个字符',
+            message: '5 - 20 characters',
             trigger: 'blur',
           },
         ],
         telephone: [
-          { required: true, message: '请输入手机号', trigger: 'blur' },
-          { min: 11, max: 11, message: '请输入11位手机号', trigger: 'blur' },
+          { required: true, message: 'Please enter phone number', trigger: 'blur' },
+          { min: 6, max: 11, message: 'please enter phone number', trigger: 'blur' },
         ],
       },
       isPassing: false, //  滑动解锁是否验证通过
@@ -135,8 +135,8 @@ export default {
           addUser(this.registerForm).then((res) => {
             if (res.success) {
               this.$notify({
-                title: '成功',
-                message: '注册成功！已跳转到登录页面',
+                title: 'success',
+                message: 'Successfully registered, redirect to login page',
                 type: 'success',
               })
               this.$refs[formName].resetFields()
@@ -146,7 +146,7 @@ export default {
             }
           })
         } else {
-          this.$message.error('请完善信息！')
+          this.$message.error('please input correct information！')
           return false
         }
       })

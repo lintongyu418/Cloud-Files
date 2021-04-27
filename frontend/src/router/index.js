@@ -23,7 +23,7 @@ const router = new Router({
       path: '/register',
       name: 'Register',
       component: () => import(/* webpackChunkName: "register" */ '@/views/Register.vue'),
-      meta: { title: '注册 - 奇文网盘' },
+      meta: { title: 'Register - Cloud Files' },
     },
     {
       path: '/file',

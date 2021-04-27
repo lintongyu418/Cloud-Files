@@ -69,7 +69,7 @@
     <i
       v-if="fileModel === 1"
       :class="batchOperate ? 'active' : ''"
-      :title="batchOperate ? '取消批量操作' : '批量操作'"
+      :title="batchOperate ? 'Cancel Batch Op' : 'Batch Op'"
       class="batch-icon el-icon-finished"
       @click="handleBatchOperationChange()"
     />
