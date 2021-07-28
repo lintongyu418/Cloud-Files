@@ -31,4 +31,14 @@ public class ShareFileServiceImpl extends ServiceImpl<ShareFileMapper, ShareFile
         return shareFileMapper.selectShareFileList(shareBatchNum, filePath);
     }
 
+    @Override
+    public List<ShareFileListVo> queryFileShares(long userFileId) {
+        return shareFileMapper.queryFileShares(userFileId);
+    }
+
+    @Override
+    public List<ShareFileListVo> queryAllShares() {
+        return shareFileMapper.queryAllShares();
+    }
+
 }

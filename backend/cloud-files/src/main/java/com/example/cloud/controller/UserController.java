@@ -20,6 +20,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
 
 @Tag(name = "user", description = "用户相关api")
 @RestController
@@ -83,5 +85,13 @@ public class UserController {
             return R.error().code(Constant.ERROR_LOGIN).message("用户暂未登录");
         }
 
+    }
+
+    @Operation(summary = "测试API", description = "mobile test api")
+    @GetMapping("/articles")
+    @ResponseBody
+    public R testMobileApi() {
+        List<String> result = Arrays.asList("AAA", "BBB", "CCC", "DDD", "EEE");
+        return R.ok().data("data", result);
     }
 }

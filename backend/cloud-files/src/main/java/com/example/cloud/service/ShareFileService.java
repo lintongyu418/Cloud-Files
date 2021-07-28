@@ -10,4 +10,9 @@ public interface ShareFileService extends IService<ShareFileBean> {
     void batchInsertShareFile(List<ShareFileBean> shareFiles);
 
     List<ShareFileListVo> selectShareFileList(String shareBatchNum, String filePath);
+
+    List<ShareFileListVo> queryFileShares(long userFileId);
+
+    List<ShareFileListVo> queryAllShares();
+
 }
