@@ -16,26 +16,3 @@ Try to build a www.wanandroid.com client
 * [BRVAH](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
 * [Agentweb](https://github.com/Justson/AgentWeb)
 * [Glide](https://github.com/bumptech/glide)
-
-# 项目运行截图
-<img src="screenshots/Screenshot_2018-02-23-14-00-13-312_com.will.weiyu.png" width="300px"/>
-<img src="screenshots/Screenshot_2018-02-23-14-00-20-507_com.will.weiyu.png" width="300px"/>
-<img src="screenshots/Screenshot_2018-02-23-14-00-24-498_com.will.weiyu.png" width="300px"/>
-<img src="screenshots/Screenshot_2018-02-23-14-00-32-235_com.will.weiyu.png" width="300px"/>
-<img src="screenshots/Screenshot_2018-02-23-14-00-42-897_com.will.weiyu.png" width="300px"/>
-<img src="screenshots/Screenshot_2018-02-23-14-00-51-177_com.will.weiyu.png" width="300px"/>
-<img src="screenshots/Screenshot_2018-02-23-14-01-29-488_com.will.weiyu.png" width="300px"/>
-<img src="screenshots/Screenshot_2018-02-23-14-01-46-958_com.will.weiyu.png" width="300px"/>
-<img src="screenshots/Screenshot_2018-02-23-14-01-52-929_com.will.weiyu.png" width="300px"/>
-<img src="screenshots/Screenshot_2018-02-23-14-01-57-654_com.will.weiyu.png" width="300px"/>
-<img src="screenshots/Screenshot_2018-02-23-14-02-15-107_com.will.weiyu.png" width="300px"/>
-<img src="screenshots/Screenshot_2018-02-23-14-02-27-830_com.will.weiyu.png" width="300px"/>
-
-# 参考项目
-WanAndroidClient https://github.com/wangzailfm/WanAndroidClient
-
-微阅 https://github.com/Will-Ls/WeiYue
-
-非常感谢以上开源项目的作者！谢谢！
-
-[Github](https://github.com/salecoding) 
