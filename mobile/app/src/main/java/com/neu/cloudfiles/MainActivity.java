@@ -14,13 +14,17 @@ import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.neu.cloudfiles.base.BaseActivity;
+import com.neu.cloudfiles.bean.DownloadFileDo;
 import com.neu.cloudfiles.bean.ShareFileListDo;
+import com.neu.cloudfiles.event.UserLogoutEvent;
 import com.neu.cloudfiles.ui.download.DownloadListFragment;
 import com.neu.cloudfiles.ui.files.FilesFragment;
 import com.neu.cloudfiles.ui.shares.SharesFragment;
+import com.neu.cloudfiles.utils.RxBus;
 
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 import me.yokeyword.fragmentation.ISupportFragment;
 
 @Route(path = "/cloudFile/MainActivity")
@@ -58,6 +62,15 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             mFragments[1] = findFragment(FilesFragment.class);
             mFragments[2] = findFragment(DownloadListFragment.class);
         }
+
+        Object a = RxBus.getInstance().toFlow(UserLogoutEvent.class)
+                .subscribe(new Consumer<UserLogoutEvent>() {
+                    @Override
+                    public void accept(UserLogoutEvent a) throws Exception {
+                        // add a new download task
+                        MainActivity.this.finish();
+                    }
+                });
     }
 
     @Override
@@ -95,6 +108,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                     .withString("targetFolderPath", ((FilesFragment) mFragments[1]).getUserCurrentFolderPath())
                     .navigation();
         } else if (item.getItemId() == R.id.menuUser) {
+            ARouter.getInstance().build("/cloudFile/UserInfo")
+                    .navigation();
         } else if (item.getItemId() == R.id.menuScan) {
             this.startScanQR();
         }

@@ -13,12 +13,16 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.neu.cloudfiles.R;
 import com.neu.cloudfiles.base.BaseActivity;
 import com.neu.cloudfiles.bean.UploadFileVo;
+import com.neu.cloudfiles.event.UserLogoutEvent;
+import com.neu.cloudfiles.ui.userInfo.UserInfoActivity;
 import com.neu.cloudfiles.utils.FileUtils;
+import com.neu.cloudfiles.utils.RxBus;
 
 import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 @Route(path = "/cloudFile/FileUploadActivity")
 public class FileUploadActivity extends BaseActivity<FileUploadPresenter>
@@ -63,6 +67,15 @@ public class FileUploadActivity extends BaseActivity<FileUploadPresenter>
         fileSize.setText(0 + " bytes");
         fileStatus.setText("Select a file to upload!");
         uploadBut.setEnabled(false);
+
+        Object a = RxBus.getInstance().toFlow(UserLogoutEvent.class)
+                .subscribe(new Consumer<UserLogoutEvent>() {
+                    @Override
+                    public void accept(UserLogoutEvent a) throws Exception {
+                        // add a new download task
+                        FileUploadActivity.this.finish();
+                    }
+                });
     }
 
     @OnClick(R.id.file_select)

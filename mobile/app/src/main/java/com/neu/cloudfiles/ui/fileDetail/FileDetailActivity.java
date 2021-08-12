@@ -29,6 +29,8 @@ import com.neu.cloudfiles.bean.ShareFileListDo;
 import com.neu.cloudfiles.bean.ShareFileListVo;
 import com.neu.cloudfiles.bean.ShareFileVo;
 import com.neu.cloudfiles.event.RefreshUserFileListEvent;
+import com.neu.cloudfiles.event.UserLogoutEvent;
+import com.neu.cloudfiles.ui.userInfo.UserInfoActivity;
 import com.neu.cloudfiles.utils.CircleButton;
 import com.neu.cloudfiles.utils.CommonDialog;
 import com.neu.cloudfiles.utils.FileUtils;
@@ -44,6 +46,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 @Route(path = "/cloudFile/FileDetailActivity")
 public class FileDetailActivity extends BaseActivity<FileDetailPresenter>
@@ -100,6 +103,14 @@ public class FileDetailActivity extends BaseActivity<FileDetailPresenter>
             mPresenter.getFileShares(fileDetail.getUserFileId());
         }
         initDialog();
+        Object a = RxBus.getInstance().toFlow(UserLogoutEvent.class)
+                .subscribe(new Consumer<UserLogoutEvent>() {
+                    @Override
+                    public void accept(UserLogoutEvent a) throws Exception {
+                        // add a new download task
+                        FileDetailActivity.this.finish();
+                    }
+                });
     }
 
     private void initDialog() {

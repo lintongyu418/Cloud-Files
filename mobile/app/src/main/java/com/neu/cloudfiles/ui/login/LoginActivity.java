@@ -2,6 +2,7 @@ package com.neu.cloudfiles.ui.login;
 
 import android.widget.EditText;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -18,6 +19,7 @@ import butterknife.OnClick;
 /**
  * Created by lw on 2018/1/24.
  */
+@Route(path = "/cloudFile/Login")
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
     @BindView(R.id.username)
     EditText mEtUsername;
@@ -36,7 +38,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     protected void initView() {
-        mEtUsername.setText(SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.USERNAME_KEY, "18202728306"));
+        mEtUsername.setText(SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.USERNAME_KEY, "13429903248"));
         mEtPassword.setText(SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.PASSWORD_KEY, "wjc123"));
         this.mPresenter.checkLogin();
     }

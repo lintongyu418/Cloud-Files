@@ -10,6 +10,7 @@ import com.neu.cloudfiles.ui.fileDetail.FileDetailActivity;
 import com.neu.cloudfiles.ui.login.LoginActivity;
 import com.neu.cloudfiles.ui.shareList.ShareListActivity;
 import com.neu.cloudfiles.ui.upload.FileUploadActivity;
+import com.neu.cloudfiles.ui.userInfo.UserInfoActivity;
 
 import dagger.Component;
 
@@ -35,4 +36,6 @@ public interface ActivityComponent {
     void inject(FileUploadActivity activity);
 
     void inject(ShareListActivity activity);
+
+    void inject(UserInfoActivity activity);
 }
