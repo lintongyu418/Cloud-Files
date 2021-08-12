@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cloud.mappers.ShareFileMapper">
+    <insert id="batchInsertShareFile" parameterType="java.util.List">
+        INSERT ignore INTO share_file (shareBatchNum, userFileId, shareFilePath)
+        VALUES
+        <foreach collection="list" item="file" index="index" separator=",">
+            (#{file.shareBatchNum}, #{file.userFileId}, #{file.shareFilePath})
+        </foreach>
+    </insert>
+    <select id="selectShareFileList" resultType="com.example.cloud.vo.ShareFileListVo">
+        select *
+        from share_file a
+                 left join user_file b on b.userFileId = a.userFileId
+                 left join share s on a.shareBatchNum = s.shareBatchNum
+                 left join file c on c.fileId = b.fileId
+                 left join user u on b.userId = u.userId
+        where a.shareBatchNum = #{shareBatchNum}
+          and a.shareFilePath = #{shareFilePath}
+    </select>
+    <select id="queryFileShares" resultType="com.example.cloud.vo.ShareFileListVo">
+        select *
+        from share_file a
+                 left join user_file b on b.userFileId = a.userFileId
+                 left join share s on a.shareBatchNum = s.shareBatchNum
+                 left join file c on c.fileId = b.fileId
+        where a.userFileId = #{userFileId}
+    </select>
+
+    <select id="queryAllShares" resultType="com.example.cloud.vo.ShareFileListVo">
+        select *
+        from share_file a
+                 left join user_file b on b.userFileId = a.userFileId
+                 left join share s on a.shareBatchNum = s.shareBatchNum
+                 left join file c on c.fileId = b.fileId
+                 left join user u on b.userId = u.userId
+    </select>
+</mapper>

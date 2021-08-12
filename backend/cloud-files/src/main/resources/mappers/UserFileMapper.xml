@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cloud.mappers.UserFileMapper">
+    <select id="userFileList" resultType="com.example.cloud.vo.FileListVo">
+        select * from user_file a
+        left join file on file.fileId = a.fileId
+        <where>
+            <if test="userFile.userId != null">
+                and a.userId = #{userFile.userId}
+            </if>
+            <if test="userFile.filePath != null">
+                and a.filePath = #{userFile.filePath}
+            </if>
+            <if test="userFile.extendName != null">
+                and a.extendName = #{userFile.extendName}
+            </if>
+            and a.deleteFlag = 0
+        </where>
+        ORDER BY isDir desc
+        limit #{beginCount}, #{pageCount}
+    </select>
+
+    <select id="folderSize" resultType="java.lang.Long">
+        select SUM(fileSize)
+        from user_file
+                 LEFT JOIN file ON file.fileId = user_file.fileId
+        WHERE filepath LIKE N'${folderPath}%'
+          and userId = #{userId};
+    </select>
+
+    <select id="selectStorageSizeByUserId" resultType="java.lang.Long" parameterType="java.lang.Long">
+        SELECT SUM(fileSize)
+        FROM user_file
+                 LEFT JOIN file ON file.fileId = user_file.fileId
+        WHERE user_file.userId = #{userId}
+    </select>
+
+    <select id="checkFileExist" resultType="com.example.cloud.vo.FileListVo">
+        select *
+        from user_file a
+                 left join file b on b.fileId = a.fileId
+        where a.userId = #{userId}
+          and b.identifier = #{fileIdentifier}
+    </select>
+
+    <select id="selectByExtendNames" parameterType="com.example.cloud.entity.UserFileBean"
+            resultType="com.example.cloud.vo.FileListVo">
+        select * from user_file
+        <include refid="selectByExtendNames">
+        </include>
+        limit #{beginCount}, #{pageCount}
+    </select>
+
+    <select id="countFileByExtendNames" parameterType="com.example.cloud.entity.UserFileBean"
+            resultType="java.lang.Long">
+        select count(*) from user_file
+        <include refid="selectByExtendNames">
+        </include>
+    </select>
+
+    <select id="selectFileNotInExtendNames" parameterType="com.example.cloud.entity.UserFileBean"
+            resultType="com.example.cloud.vo.FileListVo">
+        select * from user_file
+        <include refid="selectByNotInExtendNames">
+        </include>
+        limit #{beginCount}, #{pageCount}
+    </select>
+
+    <select id="countFileByNotInExtendNames" parameterType="com.example.cloud.entity.UserFileBean"
+            resultType="java.lang.Long">
+        select count(*) from user_file
+        <include refid="selectByNotInExtendNames">
+        </include>
+    </select>
+
+    <select id="selectUserFileByNameAndPath" parameterType="com.example.cloud.entity.UserFileBean"
+            resultType="java.lang.Boolean">
+        select *
+        from user_file
+        where user_file.userId = #{userId}
+          and user_file.filePath = #{filePath}
+          and user_file.fileName = #{fileName}
+    </select>
+
+    <update id="updateFilePathByFilePath">
+        UPDATE user_file SET filePath=REPLACE(filePath, #{param1}, #{param2})
+        WHERE filePath like N'${param1}%' and userId = #{param3}
+    </update>
+
+    <update id="updateFilePathByPathAndName">
+        update user_file set filePath = #{param2}
+        where filePath = #{param1} and fileName = #{param3}
+        <if test="param4 != null">
+            and extendName = #{param4}
+        </if>
+        <if test="param4 == null">
+            and extendName is null
+        </if>
+        and userId = #{param5}
+    </update>
+
+    <select id="replaceFolderPath">
+        UPDATE user_file
+        SET filepath=REPLACE(filepath, #{oldFilePath}, #{filePath})
+        WHERE filepath LIKE N'${oldFilePath}%'
+          and userId = #{userId};
+    </select>
+
+    <sql id="selectByExtendNames">
+        left join file on file.fileId = user_file.fileId
+        where extendName in
+        <foreach collection="fileNameList" open="(" close=")" separator="," item="fileName">
+            #{fileName}
+        </foreach>
+        and userId = #{userId}
+        and deleteFlag = 0
+    </sql>
+
+    <sql id="selectByNotInExtendNames">
+        left join file on file.fileId = user_file.fileId
+        where extendName not in
+        <foreach collection="fileNameList" open="(" close=")" separator="," item="fileName">
+            #{fileName}
+        </foreach>
+        and userId = #{userId}
+        and deleteFlag = 0
+    </sql>
+</mapper>
