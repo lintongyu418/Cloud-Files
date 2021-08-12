@@ -131,8 +131,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         String url = result.getContents();
         Gson gson = new Gson();
         ShareFileListDo shareFileListDo = gson.fromJson(url, ShareFileListDo.class);
-        ARouter.getInstance().build("/cloudFile/SharedFileList")
-                .withObject("shareSecret", shareFileListDo)
-                .navigation();
+        if (null != shareFileListDo) {
+            ARouter.getInstance().build("/cloudFile/SharedFileList")
+                    .withObject("shareSecret", shareFileListDo)
+                    .navigation();
+        }
     }
 }
