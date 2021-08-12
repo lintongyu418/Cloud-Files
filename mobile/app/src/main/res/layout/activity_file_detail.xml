@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        tools:ignore="MissingConstraints">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/action_bar"
+            app:title="File Detail" />
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.CardView
+        style="@style/card_view"
+        android:id="@+id/img_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dp_10">
+
+            <ImageView
+                android:id="@+id/img_preview"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="end"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:text="Name:" />
+
+                    <TextView
+                        android:id="@+id/file_name"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:text="Time:" />
+
+                    <TextView
+                        android:id="@+id/file_upload_time"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:text="Size:" />
+
+                    <TextView
+                        android:id="@+id/file_size"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        style="@style/card_view"
+        android:id="@+id/button_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginRight="@dimen/dp_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_container"
+        app:layout_constraintHeight_default="wrap">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.neu.cloudfiles.utils.CircleButton
+                android:id="@+id/file_download"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:padding="@dimen/dp_20"
+                android:src="@drawable/file_download"
+                app:cb_color="@color/colorPrimary"
+                app:cb_pressedRingWidth="8dip" />
+
+            <com.neu.cloudfiles.utils.CircleButton
+                android:id="@+id/file_share"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:padding="@dimen/dp_20"
+                android:src="@drawable/file_share"
+                app:cb_color="@color/colorPrimary"
+                app:cb_pressedRingWidth="8dip" />
+
+            <com.neu.cloudfiles.utils.CircleButton
+                android:id="@+id/file_delete"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:padding="@dimen/dp_20"
+                android:src="@drawable/file_delete"
+                app:cb_color="@color/colorPrimary"
+                app:cb_pressedRingWidth="8dip" />
+
+            <com.neu.cloudfiles.utils.CircleButton
+                android:id="@+id/file_refresh"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:padding="@dimen/dp_20"
+                android:src="@drawable/refresh"
+                app:cb_color="@color/colorPrimary"
+                app:cb_pressedRingWidth="8dip" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        style="@style/card_view"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_default="spread"
+        app:layout_constraintTop_toBottomOf="@+id/button_container">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/share_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>
+

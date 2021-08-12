@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:background="@drawable/dialog_background"
+    android:minWidth="260dp"
+    android:orientation="vertical"
+    android:paddingTop="16dp">
+
+    <TextView
+        android:id="@+id/share_title"
+        android:textSize="24sp"
+        android:text="Share File"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textColor="#333333"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:textColor="#333333"
+        android:text="Share Type:" />
+
+    <RadioGroup
+        android:id="@+id/file_type_radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/share_public"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Public"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp_15"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <RadioButton
+            android:id="@+id/share_private"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Private"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp_15"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:textColor="#333333"
+        android:text="Expire Date:" />
+    <DatePicker
+        android:id="@+id/date_picker"
+        style="@android:style/Widget.DatePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="16dp"
+        android:background="#E4E4E4" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/negative"
+            tools:text="No"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:singleLine="true"
+            android:textColor="#999999"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/column_line"
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#E4E4E4" />
+
+        <Button
+            android:id="@+id/positive"
+            tools:text="Yes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:singleLine="true"
+            android:textColor="#38ADFF"
+            android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>

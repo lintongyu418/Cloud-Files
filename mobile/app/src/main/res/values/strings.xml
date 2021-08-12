@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">CloudFiles</string>
+    <string name="title_shares">Shares</string>
+    <string name="title_files">Files</string>
+    <string name="title_download">Download</string>
+    <string name="empty_network_error">Network error, Click Retry</string>
+    <string name="empty_no_data">There is no data, Click Retry</string>
+
+    <string name="hot_title">Hot</string>
+    <string name="search_title">Search</string>
+
+    <string name="no_network_connection">无网络连接</string>
+    <string name="exit_system">再按一次退出程序</string>
+
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="the_username_or_password_can_not_be_empty">Username or password cannnot be empty</string>
+
+    <string name="tag">CS5520 Final</string>
+    <string name="login">Login</string>
+    <string name="no_need_for_password">no need for password</string>
+    <string name="enter_name_hint">Please enter a valid name</string>
+    <string name="file_type">file type</string>
+    <string name="download_title">Download Files</string>
+</resources>
