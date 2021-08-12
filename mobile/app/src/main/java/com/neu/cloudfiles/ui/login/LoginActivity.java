@@ -12,9 +12,12 @@ import com.neu.cloudfiles.base.BaseActivity;
 import com.neu.cloudfiles.bean.UserLoginVo;
 import com.neu.cloudfiles.bean.UserVo;
 import com.neu.cloudfiles.constant.Constant;
+import com.neu.cloudfiles.event.RegisterSuccessEvent;
+import com.neu.cloudfiles.utils.RxBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by lw on 2018/1/24.
@@ -41,6 +44,20 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         mEtUsername.setText(SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.USERNAME_KEY, "13429903248"));
         mEtPassword.setText(SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.PASSWORD_KEY, "wjc123"));
         this.mPresenter.checkLogin();
+        Object a = RxBus.getInstance().toFlow(RegisterSuccessEvent.class)
+                .subscribe(new Consumer<RegisterSuccessEvent>() {
+                    @Override
+                    public void accept(RegisterSuccessEvent a) throws Exception {
+                        // add a new download task
+                        setUserInfo(a);
+                    }
+                });
+
+    }
+
+    private void setUserInfo(RegisterSuccessEvent a) {
+        ((EditText) findViewById(R.id.username)).setText(a.username);
+        ((EditText) findViewById(R.id.password)).setText(a.password);
     }
 
     @Override
@@ -57,6 +74,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             return;
         }
         mPresenter.login(username, password);
+    }
+
+    @OnClick(R.id.btn_register)
+    public void register() {
+        ARouter.getInstance().build("/cloudFile/Register").navigation();
     }
 
     @Override

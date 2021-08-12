@@ -214,19 +214,14 @@ public class ShareController {
         }
         long userFileId = saveShareFileDTO.getUserFileId();
         String saveFilePath = saveShareFileDTO.getFilePath();
-        LambdaQueryWrapper<UserFileBean> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper
-                .eq(UserFileBean::getUserFileId, userFileId)
-                .eq(UserFileBean::getUserId, sessionUserBean.getUserId())
-                .eq(UserFileBean::getFilePath, saveFilePath);
-        if (userFileService.count(lambdaQueryWrapper) == 1) {
-            return R.error().code(Constant.ERROR_LOGIN).message("already have!");
-        }
         Long userId = sessionUserBean.getUserId();
         List<UserFileBean> saveUserFileList = new ArrayList<>();
         UserFileBean userFile = userFileService.getById(userFileId);
         String fileName = userFile.getFileName();
         String saveFileName = fileDealComp.getRepeatFileName(userFile, saveFilePath);
+        if (userFileService.checkFileExist(sessionUserBean.getUserId(), saveFileName, userFile.getExtendName(), saveFilePath)) {
+            return R.error().code(Constant.ERROR_LOGIN).message("already have!");
+        }
         if (userFile.getIsDir() == 1) {
             List<UserFileBean> userFileList = userFileService.selectFileListLikeRightFilePath(userFile.getFilePath() + userFile.getFileName(), userFile.getUserId());
             log.info("查询文件列表：" + JSON.toJSONString(userFileList));

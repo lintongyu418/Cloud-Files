@@ -53,6 +53,7 @@
         <activity android:name="com.neu.cloudfiles.ui.upload.FileUploadActivity"></activity>
         <activity android:name="com.neu.cloudfiles.ui.shareList.ShareListActivity" />
         <activity android:name=".ui.userInfo.UserInfoActivity" />
+        <activity android:name=".ui.register.RegisterActivity" />
         <activity
             android:name="com.neu.cloudfiles.CaptureActivityPortrait"
             android:screenOrientation="fullSensor"

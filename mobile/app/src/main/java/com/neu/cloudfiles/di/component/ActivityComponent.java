@@ -8,6 +8,7 @@ import com.neu.cloudfiles.di.scope.ContextLife;
 import com.neu.cloudfiles.di.scope.PerActivity;
 import com.neu.cloudfiles.ui.fileDetail.FileDetailActivity;
 import com.neu.cloudfiles.ui.login.LoginActivity;
+import com.neu.cloudfiles.ui.register.RegisterActivity;
 import com.neu.cloudfiles.ui.shareList.ShareListActivity;
 import com.neu.cloudfiles.ui.upload.FileUploadActivity;
 import com.neu.cloudfiles.ui.userInfo.UserInfoActivity;
@@ -38,4 +39,6 @@ public interface ActivityComponent {
     void inject(ShareListActivity activity);
 
     void inject(UserInfoActivity activity);
+
+    void inject(RegisterActivity activity);
 }

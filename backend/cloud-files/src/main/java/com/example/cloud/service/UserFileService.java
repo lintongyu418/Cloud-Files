@@ -12,6 +12,8 @@ public interface UserFileService extends IService<UserFileBean> {
 
     boolean checkFileExist(Long userId, String fileName, String filePath);
 
+    boolean checkFileExist(Long userId, String fileNameWithoutExtend, String fileExtendName, String filePath);
+
     List<FileListVo> selectByExtendNames(List<String> fileNameList, Long beginCount, Long pageCount, long userId);
 
     Long countFileByExtendNames(List<String> fileNameList, Long beginCount, Long pageCount, long userId);

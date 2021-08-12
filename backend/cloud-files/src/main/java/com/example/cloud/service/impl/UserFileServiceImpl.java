@@ -43,6 +43,11 @@ public class UserFileServiceImpl extends ServiceImpl<UserFileMapper, UserFileBea
     public boolean checkFileExist(Long userId, String fileName, String filePath) {
         String fileExtendName = FileUtil.getFileExtendName(fileName);
         String fileNameWithoutExtend = FileUtil.getFileNameNotExtend(fileName);
+        return checkFileExist(userId, fileNameWithoutExtend, fileExtendName, filePath);
+    }
+
+    @Override
+    public boolean checkFileExist(Long userId, String fileNameWithoutExtend, String fileExtendName, String filePath) {
         LambdaQueryWrapper<UserFileBean> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(UserFileBean::getUserId, userId)
                 .eq(UserFileBean::getFileName, fileNameWithoutExtend)
@@ -177,7 +182,7 @@ public class UserFileServiceImpl extends ServiceImpl<UserFileMapper, UserFileBea
 
     @Override
     public void updateFilePathByFilePath(String oldFilePath, String newFilePath, String fileName, String extendName, long userId) {
-        if ("null".equals(extendName)){
+        if ("null".equals(extendName)) {
             extendName = null;
         }
         //移动根目录

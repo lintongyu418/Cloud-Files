@@ -36,13 +36,13 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                         if (response.getCode() == Constant.SUCCESS_RESPONSE) {
                             mView.loginSuccess(response.getData().get("user"));
                         } else {
-                            mView.showFailed(String.valueOf(response.getMessage()));
+                            mView.showFailed("Failed to login!");
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        mView.showFailed(throwable.getMessage());
+                        mView.showFailed("Failed to login!");
                     }
                 });
     }
@@ -59,13 +59,13 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                         if (response.getCode() == Constant.SUCCESS_RESPONSE) {
                             mView.checkLoginCb(response.getData().get("userInfo"));
                         } else {
-                            mView.showFailed(response.getMessage());
+                            mView.showFailed("User not login!");
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        mView.showFailed(throwable.getMessage());
+                        mView.showFailed("User not login!");
                     }
                 });
     }

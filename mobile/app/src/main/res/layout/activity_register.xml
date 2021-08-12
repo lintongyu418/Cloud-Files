@@ -2,7 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
+    tools:context=".ui.register.RegisterActivity"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
@@ -13,7 +15,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             style="@style/action_bar"
-            app:title="@string/login">
+            app:title="Register User">
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
@@ -42,6 +44,7 @@
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/username"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/username"/>
@@ -62,19 +65,6 @@
                 android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="40dp"
-        android:background="@drawable/btn_custom"
-        android:fontFamily="@font/roboto_regular"
-        android:textColor="@android:color/white"
-        android:text="@string/login" />
 
     <Button
         android:id="@+id/btn_register"

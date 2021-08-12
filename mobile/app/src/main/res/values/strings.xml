@@ -9,12 +9,12 @@
     <string name="hot_title">Hot</string>
     <string name="search_title">Search</string>
 
-    <string name="no_network_connection">无网络连接</string>
-    <string name="exit_system">再按一次退出程序</string>
+    <string name="no_network_connection">No Internet Connection</string>
+    <string name="exit_system">Press again to exit!</string>
 
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="the_username_or_password_can_not_be_empty">Username or password cannnot be empty</string>
+    <string name="the_username_or_password_can_not_be_empty">Username or password cannot be empty</string>
 
     <string name="tag">CS5520 Final</string>
     <string name="login">Login</string>

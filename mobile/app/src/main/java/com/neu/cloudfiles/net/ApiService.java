@@ -2,6 +2,7 @@ package com.neu.cloudfiles.net;
 
 import com.neu.cloudfiles.bean.DataResponse;
 import com.neu.cloudfiles.bean.DeleteFileDo;
+import com.neu.cloudfiles.bean.RegisterDo;
 import com.neu.cloudfiles.bean.SaveShareFileDo;
 import com.neu.cloudfiles.bean.ShareFileDo;
 import com.neu.cloudfiles.bean.UserLoginVo;
@@ -69,5 +70,8 @@ public interface ApiService {
 
     @GET("/share/banners")
     Observable<DataResponse<Map<String, Object>>> getBanners();
+
+    @POST("/user/create")
+    Observable<DataResponse<Map<String, Object>>> register(@Body RegisterDo registerDo);
 }
 
