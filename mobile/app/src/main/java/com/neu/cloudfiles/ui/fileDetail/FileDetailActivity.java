@@ -234,7 +234,7 @@ public class FileDetailActivity extends BaseActivity<FileDetailPresenter>
 
     private void openShareQEDialog(String content) {
         ImageView imageView = (ImageView) openQRDialog.findViewById(R.id.dialog_preview_qr);
-        imageView.setImageBitmap(QRCodeUtil.createQRCodeBitmap(content, 200, 200));
+        imageView.setImageBitmap(QRCodeUtil.createQRCodeBitmap(content, 240, 240));
         openQRDialog.show();
     }
 }

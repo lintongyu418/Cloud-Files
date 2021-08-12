@@ -10,7 +10,7 @@ import java.util.Map;
  */
 
 public class Constant {
-    public static final String REQUEST_BASE_URL = "http://192.168.1.194:10000";
+    public static final String REQUEST_BASE_URL = "http://161.35.224.251:10000";
     public static final String SHARE_LINK_PREFIX = REQUEST_BASE_URL + "/share/";
 
     public static final String SAVE_USER_LOGIN_KEY = "user/login";
