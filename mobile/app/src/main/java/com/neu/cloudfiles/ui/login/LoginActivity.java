@@ -41,8 +41,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     protected void initView() {
-        mEtUsername.setText(SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.USERNAME_KEY, "13429903248"));
-        mEtPassword.setText(SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.PASSWORD_KEY, "wjc123"));
+        mEtUsername.setText(SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.USERNAME_KEY, ""));
+        mEtPassword.setText(SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.PASSWORD_KEY, ""));
         this.mPresenter.checkLogin();
         Object a = RxBus.getInstance().toFlow(RegisterSuccessEvent.class)
                 .subscribe(new Consumer<RegisterSuccessEvent>() {

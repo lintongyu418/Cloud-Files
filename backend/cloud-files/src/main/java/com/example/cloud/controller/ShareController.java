@@ -218,6 +218,9 @@ public class ShareController {
         List<UserFileBean> saveUserFileList = new ArrayList<>();
         UserFileBean userFile = userFileService.getById(userFileId);
         String fileName = userFile.getFileName();
+        if (userFileService.checkFileExist(sessionUserBean.getUserId(), fileName, userFile.getExtendName(), saveFilePath)) {
+            return R.error().code(Constant.ERROR_LOGIN).message("already have!");
+        }
         String saveFileName = fileDealComp.getRepeatFileName(userFile, saveFilePath);
         if (userFileService.checkFileExist(sessionUserBean.getUserId(), saveFileName, userFile.getExtendName(), saveFilePath)) {
             return R.error().code(Constant.ERROR_LOGIN).message("already have!");

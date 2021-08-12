@@ -48,6 +48,5 @@ public class DownloadListPresenter extends BasePresenter<DownloadListContract.Vi
 
             }
         });
-        mView.addNewTaskCb(vo);
     }
 }

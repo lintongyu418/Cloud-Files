@@ -50,6 +50,8 @@ public class DownloadListFragment extends BaseFragment<DownloadListPresenter>
             @Override
             public void accept(DownloadFileDo downloadFileVo) throws Exception {
                 // add a new download task
+                DownloadFileVo vo = new DownloadFileVo(downloadFileVo.getFileName(), downloadFileVo.getImgId(), downloadFileVo.getUserFileId(), downloadFileVo.getFileSize());
+                mDownloadFileAdapter.addData(vo);
                 mPresenter.addTask(downloadFileVo);
                 ToastUtils.showShort("Successfully add a new download task");
             }
