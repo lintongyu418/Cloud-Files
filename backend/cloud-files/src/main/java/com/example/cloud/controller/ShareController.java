@@ -215,8 +215,10 @@ public class ShareController {
         long userFileId = saveShareFileDTO.getUserFileId();
         String saveFilePath = saveShareFileDTO.getFilePath();
         LambdaQueryWrapper<UserFileBean> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(UserFileBean::getUserFileId, userFileId)
-        .eq(UserFileBean::getFilePath, saveFilePath);
+        lambdaQueryWrapper
+                .eq(UserFileBean::getUserFileId, userFileId)
+                .eq(UserFileBean::getUserId, sessionUserBean.getUserId())
+                .eq(UserFileBean::getFilePath, saveFilePath);
         if (userFileService.count(lambdaQueryWrapper) == 1) {
             return R.error().code(Constant.ERROR_LOGIN).message("already have!");
         }
